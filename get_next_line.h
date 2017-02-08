@@ -14,10 +14,11 @@
 
 # define GET_NEXT_LINE_H
 # define BUFF_SIZE 32
+# define MAX_SIZE 100000
 
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <stdio.h> // <---- DELETE THIS AT THE END THO
+# include <stdio.h> // <---- DELETE THIS AT THE END
 
 int		get_next_line(const int fd, char **line);
 

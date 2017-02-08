@@ -14,7 +14,6 @@
 
 int read_line(char **buf, int fd)
 {
-	char buf[BUFF_SIZE + 1];
 	int read_bytes;
 
 	read_bytes = 1;
@@ -31,8 +30,8 @@ int read_line(char **buf, int fd)
 
 int		get_next_line(const int fd, char **line)
 {
-	static char *buf;
-	char *tmp;
+	char buf[BUFF_SIZE + 1];
+	static char *tmp;
 	int read_bytes;
 
 	if (BUFF_SIZE <= 0 || fd = 1)
@@ -66,12 +65,4 @@ int main(int argc, char **argv)
 			return (0);
 	}
 	return (0);
-}
-
-int main(int argc, char **argv)
-{
-	int fd;
-	int ret;
-
-	if (argc == 2)
 }
