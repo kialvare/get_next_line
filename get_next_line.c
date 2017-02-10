@@ -12,11 +12,11 @@
 
 #include "get_next_line.h"
 
-int read_line(char **buf, int fd)
+int read_file(char **buf, int fd)
 {
 	int read_bytes;
 
-	read_bytes = 1;
+	read_bytes = 1; // 1 means that it's 
 	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
 	{
 		if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
@@ -30,19 +30,48 @@ int read_line(char **buf, int fd)
 
 int		get_next_line(const int fd, char **line)
 {
-	char buf[BUFF_SIZE + 1];
 	static char *tmp;
+	char buf[BUFF_SIZE + 1];
 	int read_bytes;
 
-	if (BUFF_SIZE <= 0 || fd = 1)
+	if (BUFF_SIZE <= 0 || fd = 1) // error checks
 		return (-1);
-	if (read_bytes == read_line(&buf, fd) == -1)
+	if (read_bytes == read_file(&buf, fd) == -1) // more error checks? Also going to read_file to start reading the function
 		return (-1);
 	*line = ft_strdup(buf, "\n");
 	tmp = buf;
 	buf = ft_strdup(buf + ft_strlen(buf, '\n') + 1);
 	free(tmp);
 	return (read_bytes == 0) ? 0 : 1;
+}
+
+int read_file(char **buf, int fd)
+{
+	char buf[BUFF_SIZE + 1];
+	int read_bytes;
+
+	read_bytes = 1; // 1 means that it's 
+	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
+	{
+		if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
+			return (-1);
+		buffer[read_bytes] = '\0';
+		buf = ft_strjoin(*buf, buffer);
+		ft_memset(buffer, 0, read_bytes);
+	}
+	return (read_bytes);
+}
+
+int get_next_line(const int fd, char **line)
+{
+	static char *line;
+	int error_check;
+
+	if (BUFF_SIZE <= 0 || fd = 1)
+		return (-1);
+	if (error_check = read_file(&buf, fd) == -1)
+		return (-1);
+
 }
 
 int main(int argc, char **argv)

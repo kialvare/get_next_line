@@ -14,7 +14,7 @@
 
 # define GET_NEXT_LINE_H
 # define BUFF_SIZE 32
-# define MAX_SIZE 100000
+# define MAX_SIZE 100000 // <--- Research more on max buffer size/buffer sizes
 
 # include "libft/libft.h"
 # include <fcntl.h>
