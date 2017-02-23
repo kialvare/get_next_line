@@ -16,7 +16,7 @@ int read_file(char **buf, int fd)
 {
 	int read_bytes;
 
-	read_bytes = 1; // 1 means that it's 
+	read_bytes = 1;
 	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
 	{
 		if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
@@ -50,28 +50,21 @@ int read_file(char **buf, int fd)
 	char buf[BUFF_SIZE + 1];
 	int read_bytes;
 
-	read_bytes = 1; // 1 means that it's 
+	read_bytes = 1; 
 	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
 	{
-		if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
+		if ((read_bytes = read(fd, buffer, BUFF_SIZE)) == -1)
 			return (-1);
 		buffer[read_bytes] = '\0';
 		buf = ft_strjoin(*buf, buffer);
-		ft_memset(buffer, 0, read_bytes);
+		ft_bzero(buffer, read_bytes);
 	}
 	return (read_bytes);
 }
 
 int get_next_line(const int fd, char **line)
 {
-	static char *line;
-	int error_check;
-
-	if (BUFF_SIZE <= 0 || fd = 1)
-		return (-1);
-	if (error_check = read_file(&buf, fd) == -1)
-		return (-1);
-
+	char buf[BUFF_SIZE + 1];
 }
 
 int main(int argc, char **argv)
