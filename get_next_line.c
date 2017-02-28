@@ -34,9 +34,9 @@ int		get_next_line(const int fd, char **line)
 	char buf[BUFF_SIZE + 1];
 	int read_bytes;
 
-	if (BUFF_SIZE <= 0 || fd = 1) // error checks
+	if (BUFF_SIZE <= 0 || fd = 1)
 		return (-1);
-	if (read_bytes == read_file(&buf, fd) == -1) // more error checks? Also going to read_file to start reading the function
+	if (read_bytes == read_file(&buf, fd) == -1)
 		return (-1);
 	*line = ft_strdup(buf, "\n");
 	tmp = buf;
@@ -64,7 +64,10 @@ int read_file(char **buf, int fd)
 
 int get_next_line(const int fd, char **line)
 {
+	static char *tmp;
 	char buf[BUFF_SIZE + 1];
+
+
 }
 
 int main(int argc, char **argv)
