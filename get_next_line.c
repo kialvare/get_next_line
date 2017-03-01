@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int read_file(char **buf, int fd)
 {
@@ -65,9 +66,15 @@ int read_file(char **buf, int fd)
 int get_next_line(const int fd, char **line)
 {
 	static char *tmp;
+	int read_bytes;
 	char buf[BUFF_SIZE + 1];
 
-
+	read_bytes = 1;
+	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
+	{
+		if ((read_bytes = read(fd, buffer, BUFF_SIZE)) == -1)
+			return (-1);
+	}
 }
 
 int main(int argc, char **argv)
