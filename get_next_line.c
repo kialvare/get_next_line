@@ -63,6 +63,11 @@ int read_file(char **buf, int fd)
 	return (read_bytes);
 }
 
+int read_file(char **buf, int fd)
+{
+	int read_bytes;
+}
+
 int get_next_line(const int fd, char **line)
 {
 	static char *tmp;
@@ -70,11 +75,6 @@ int get_next_line(const int fd, char **line)
 	char buf[BUFF_SIZE + 1];
 
 	read_bytes = 1;
-	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
-	{
-		if ((read_bytes = read(fd, buffer, BUFF_SIZE)) == -1)
-			return (-1);
-	}
 }
 
 int main(int argc, char **argv)
