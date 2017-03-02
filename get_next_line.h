@@ -20,6 +20,14 @@
 # include <fcntl.h>
 # include <stdio.h> // <---- DELETE THIS AT THE END
 
-int		get_next_line(const int fd, char **line);
+typedef struct		s_line
+{
+	char			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_line;
+
+// int		get_next_line(const int fd, char **line);
+int		get_next_line(const int fd);
 
 #endif
