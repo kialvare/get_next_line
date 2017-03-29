@@ -69,39 +69,42 @@
 // }
 
 //int get_next_line(const int fd, char **line)
-int get_next_line(const int fd)
+int get_next_line(const int fd, char **line)
 {
-	//static char *line; // Store the line in here; it will store the line each call
-	int read_bytes;
+	//static char *the_line; // Store the next line every time it is called
 	char buffer[BUFF_SIZE + 1];
+	char *stock; // Store anything that is after the newline
 
-	read_bytes = 1;
-	if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
-		return (-1);
-	printf("Read bytes: %d\n", read_bytes);
+	while (ft_strchr(buffer, '\n') == NULL)
+	{
+		if (read(fd, buffer, BUFF_SIZE) == -1)
+			return (-1);
+		stock = ft_strjoin(*line, buffer);
+	}
 	return (0);
 }
 
 int main(int argc, char **argv)
-// int main(void)
 {
 	int fd;
-	//int ret;
-	//char *line;
+	int ret;
+	char *line;
 
 	if (argc == 2)
 		fd = open(argv[1], O_RDWR | O_CREAT);
 	else
+	{
 		fd = 0;
+		return (0);
+	}
 
-	// while (1)
-	// {
-		//ret = 
-		get_next_line(fd);
-	// 	if (ret = -1)
-	// 		ft_putendl("error");
-	// 	if (ret == 0 || ret == -1)
-	// 		return (0);
-	// }
-	// return (0);
+	while (1)
+	{
+		ret = get_next_line(fd, &line);
+		if (ret == -1)
+			ft_putendl("error");
+		if (ret == 0 || ret == -1)
+			return (0);
+	}
+	return (0);
 }
