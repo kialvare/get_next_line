@@ -11,100 +11,79 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-// int read_file(char **buf, int fd)
-// {
-// 	int read_bytes;
-
-// 	read_bytes = 1;
-// 	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
-// 	{
-// 		if (read_bytes = read(fd, buffer, BUFF_SIZE) == -1)
-// 			return (-1);
-// 		buffer[read_bytes] = '\0';
-// 		buf = ft_strjoin(*buf, buffer);
-// 		ft_memset(buffer, 0, read_bytes);
-// 	}
-// 	return (read_bytes);
-// }
-
-// int		get_next_line(const int fd, char **line)
-// {
-// 	static char *tmp;
-// 	char buf[BUFF_SIZE + 1];
-// 	int read_bytes;
-
-// 	if (BUFF_SIZE <= 0 || fd = 1)
-// 		return (-1);
-// 	if (read_bytes == read_file(&buf, fd) == -1)
-// 		return (-1);
-// 	*line = ft_strdup(buf, "\n");
-// 	tmp = buf;
-// 	buf = ft_strdup(buf + ft_strlen(buf, '\n') + 1);
-// 	free(tmp);
-// 	return (read_bytes == 0) ? 0 : 1;
-// }
-
-// int read_file(char **buf, int fd)
-// {
-// 	char buf[BUFF_SIZE + 1];
-// 	int read_bytes;
-
-// 	read_bytes = 1; 
-// 	while (ft_strstr(*buf, "\n") == NULL && read_bytes != 0)
-// 	{
-// 		if ((read_bytes = read(fd, buffer, BUFF_SIZE)) == -1)
-// 			return (-1);
-// 		buffer[read_bytes] = '\0 ';
-// 		buf = ft_strjoin(*buf, buffer);
-// 		ft_bzero(buffer, read_bytes);
-// 	}
-// 	return (read_bytes);
-// }
-
-// int read_file(char **buf, int fd)
-// {
-// 	int read_bytes;
-// }
-
-//int get_next_line(const int fd, char **line)
-int get_next_line(const int fd, char **line)
+static int  split(int const fd, char *buff, char *store[fd])
 {
-	//static char *the_line; // Store the next line every time it is called
-	char buffer[BUFF_SIZE + 1];
-	char *stock; // Store anything that is after the newline
+    char    *tmp;
+    char    *p;
+    int     i;
 
-	while (ft_strchr(buffer, '\n') == NULL)
-	{
-		if (read(fd, buffer, BUFF_SIZE) == -1)
-			return (-1);
-		stock = ft_strjoin(*line, buffer);
-	}
-	return (0);
+    i = 0;
+    while (!(p = ft_strchr(store[fd], '\n')) &&
+        (i = read(fd, buff, BUFF_SIZE)) > 0)
+    {
+        buff[i] = '\0';
+        tmp = store[fd];
+        store[fd] = ft_strjoin(tmp, buff);
+        ft_strdel(&tmp);
+    }
+    if (i == -1)
+        return (-1);
+    if (i == 0 && !p)
+        return (0);
+    return (1);
+}
+
+int         get_next_line(int const fd, char **line)
+{
+    static char *store[256];
+    char        *tmp;
+    int         ret;
+    char        buff[BUFF_SIZE + 1];
+
+    if (fd < 0 || !line)
+        return (-1);
+    if (!store[fd])
+        store[fd] = ft_strnew(1);
+    ret = split(fd, buff, &*store);
+    if (ret == 0)
+    {
+        *line = store[fd];
+        store[fd] = NULL;
+        return (0);
+    }
+    *line = ft_strsub(store[fd], 0, ft_strchr(store[fd], '\n') - store[fd]);
+    tmp = store[fd];
+    store[fd] = ft_strdup(ft_strchr(store[fd], '\n') + 1);
+    ft_strdel(&tmp);
+    return (1);
 }
 
 int main(int argc, char **argv)
 {
-	int fd;
-	int ret;
-	char *line;
+    int fd;
+    int ret;
+    char *line;
 
-	if (argc == 2)
-		fd = open(argv[1], O_RDWR | O_CREAT);
-	else
-	{
-		fd = 0;
-		return (0);
-	}
+    if (argc == 2)
+        fd = open(argv[1], O_RDONLY);
+    else
+    {
+        fd = 0;
+        return (0);
+    }
 
-	while (1)
-	{
-		ret = get_next_line(fd, &line);
-		if (ret == -1)
-			ft_putendl("error");
-		if (ret == 0 || ret == -1)
-			return (0);
-	}
-	return (0);
+    int i;
+
+    i = 0;
+    while (1)
+    {
+        ret = get_next_line(fd, &line);
+        printf("%d\n", i);
+        printf("%s\n", line);
+        if (ret == 0 || ret == -1)
+            return (0);
+        i++;
+    }
+    return (0);
 }

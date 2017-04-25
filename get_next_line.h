@@ -18,16 +18,8 @@
 
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <stdio.h> // <---- DELETE THIS AT THE END
-
-typedef struct		s_line
-{
-	char			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_line;
+# include <stdio.h> // <---- Supprimez ceci à la fin
 
 int		get_next_line(const int fd, char **line);
-//int		get_next_line(const int fd);
 
 #endif
