@@ -12,40 +12,40 @@
 
 #include "get_next_line.h"
 
-static int  split(int const fd, char *buff, char *store[fd])
+int  line_read(int const fd, char *buff, char *store[fd])
 {
     char    *tmp;
-    char    *p;
+    char    *check;
     int     i;
 
     i = 0;
-    while (!(p = ft_strchr(store[fd], '\n')) &&
+    while (!(check = ft_strchr(store[fd], '\n')) &&
         (i = read(fd, buff, BUFF_SIZE)) > 0)
     {
-        buff[i] = '\0';
         tmp = store[fd];
         store[fd] = ft_strjoin(tmp, buff);
         ft_strdel(&tmp);
     }
     if (i == -1)
         return (-1);
-    if (i == 0 && !p)
+    if (i == 0 && !check)
         return (0);
     return (1);
 }
 
 int         get_next_line(int const fd, char **line)
 {
-    static char *store[256];
-    char        *tmp;
-    int         ret;
-    char        buff[BUFF_SIZE + 1];
+    static char *store[4000];
+	char		*buff;
+    char		*tmp;
+    int			ret;
 
-    if (fd < 0 || !line)
+	buff = ft_strnew(BUFF_SIZE);
+    if (fd < 0 || !line || read(fd, *line, 0) < 0)
         return (-1);
     if (!store[fd])
         store[fd] = ft_strnew(1);
-    ret = split(fd, buff, &*store);
+    ret = line_read(fd, buff, &*store);
     if (ret == 0)
     {
         *line = store[fd];
@@ -64,6 +64,7 @@ int main(int argc, char **argv)
     int fd;
     int ret;
     char *line;
+	int i;
 
     if (argc == 2)
         fd = open(argv[1], O_RDONLY);
@@ -73,17 +74,18 @@ int main(int argc, char **argv)
         return (0);
     }
 
-    int i;
-
     i = 0;
     while (1)
     {
         ret = get_next_line(fd, &line);
-        printf("%d\n", i);
-        printf("%s\n", line);
+        printf("(%d) %d: %s\n", ret, i, line);
         if (ret == 0 || ret == -1)
+		{
+			close(fd);
             return (0);
+		}
         i++;
     }
+	close(fd);
     return (0);
 }
