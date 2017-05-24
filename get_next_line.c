@@ -25,6 +25,7 @@ int  line_read(int const fd, char *buff, char *store[fd])
         tmp = store[fd];
         store[fd] = ft_strjoin(tmp, buff);
         ft_strdel(&tmp);
+	ft_bzero(buff, BUFF_SIZE + 1);
     }
     if (i == -1)
         return (-1);
